@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J5 bank</title>
+</head>
+<body>
+    <script>
+        let saldo = 200.00;
+        let senha = 3589;
+        let senhacorreta = 3589;
+
+        let nome = (prompt("Digite seu nome"))
+        alert("Seja bem-vindo ao J5 bank" + "," + nome);
+
+        let continuar = true;
+
+        while (continuar) {
+            let opcoes = parseInt(prompt("Escolha uma opção 1-Saldo, 2-Saque, 3-Extrato, 4-Depósito, 5-Transferência, 6-Sair. "));
+
+            switch (opcoes) {
+                case 1:
+                    alert("Saldo atual: " + saldo);
+                    break;
+
+                case 2:
+                    saque();
+                    break;
+
+                case 3:
+                    ver_extrato();
+                    break;
+
+                case 4:
+                    fazer_deposito();
+                    break;
+
+                case 5:
+                    fazer_tranferencia();
+                    break;
+
+                case 6:
+                    sair();
+                    continuar = false;
+                    break;
+
+                default:
+                    alert("Opção inválida. Por favor, escolha uma opção válida.");
+                    break;
+            }
+        }
+
+        function ver_extrato() {
+            let extratosenha = prompt("Para ver seu extrato, por favor, informe sua senha.")
+
+            if (extratosenha == senhacorreta) {
+                alert("Extrato\n03/03/2024, Depósito em dinheiro: R$ 1.500,00\n05/03/2024, Pagamento de conta de luz: -R$ 120,00");
+            } else {
+                alert("Senha inválida, tente novamente");
+                ver_extrato();
+            }
+        }
+
+        function fazer_deposito() {
+            let deposito = parseFloat(prompt("Informe o valor do depósito"))
+
+            if (deposito <= 0 || isNaN(deposito)) {
+                alert("Valor inválido. O depósito deve ser maior que zero.");
+                return;
+            }
+
+            let senha = parseInt(prompt("Informe sua senha: "));
+
+            if (senha === senhacorreta) {
+                saldo += deposito;
+                alert("Transação concluída");
+            } else {
+                alert("Senha inválida, tente novamente");
+                fazer_deposito();
+            }
+        }
+
+        function fazer_tranferencia() {
+            let valor = parseFloat(prompt("Informe o valor: "));
+
+            if (valor <= 0 || isNaN(valor)) {
+                alert("Valor inválido. A transferência deve ser maior que zero.");
+                return;
+            }
+
+            if (valor > saldo) {
+                alert("Saldo insuficiente");
+                return;
+            }
+
+            let beneficiario = parseInt(prompt("Informe, sem utilizar pontos, o número da conta do beneficiário"));
+            let senha = parseInt(prompt("Informe sua senha: "));
+
+            if (senha === senhacorreta) {
+                saldo -= valor;
+                alert("Transação concluída");
+            } else {
+                alert("Senha inválida, tente novamente");
+                fazer_tranferencia();
+            }
+        }
+
+        function saque() {
+            let retira = parseInt(prompt("Informe o valor de saque"))
+
+            if (retira <= 0 || isNaN(retira)) {
+                alert("Valor inválido.");
+                return;
+            }
+
+            if (retira > saldo) {
+                alert("Saldo insuficiente");
+
+            } else {
+                let senha = parseInt(prompt("Informe sua senha: "));
+
+                if (senha === senhacorreta) {
+                    saldo -= retira;
+                    alert("Transação concluída");
+                } else {
+                    alert("Senha inválida, tente novamente");
+                    saque();
+                }
+
+            }
+        }
+
+        function sair() {
+            alert("Obrigado" + " " + nome + " " + "por utilizar o J5 Bank. Até logo! ");
+
+        }
+    </script>
+</body>
+</html>
